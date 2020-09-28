@@ -1,3 +1,8 @@
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+
+
+
 const Button = ({func,text})=> <><button onClick={func}>{text}</button></>
 const Statsitics = ({good,neutral,bad})=>{
   let all = good+neutral+bad;
