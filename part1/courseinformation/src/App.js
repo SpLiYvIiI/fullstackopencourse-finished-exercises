@@ -61,7 +61,7 @@ export default () =>{
                 </li>)
               }   
               )}
-              <li>Total of exercises {course.parts.reduce( ( sum, {exercises} ) => sum + exercises, 0)}</li>
+              <li style={{fontWeight: "bold"}}>Total of exercises {course.parts.reduce( ( sum, {exercises} ) => sum + exercises, 0)}</li>
               </ul>
               </li>)
           })}
