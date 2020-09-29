@@ -1,5 +1,3 @@
 import React from 'react';
 
-export default ()=>{
-    
-}
+export default ({key,note})=> <li key={key}>{note.content}</li> 
