@@ -1,4 +1,5 @@
 import React from 'react'
+import Course from './components/Course'
 
 export default () =>{
     const courses = [
@@ -50,20 +51,7 @@ export default () =>{
           <h1>Web development curriculum</h1>
           <ul>
           {courses.map(course=>{
-              return(
-              <li key={course.id}>
-              <h1>{course.name}</h1>
-              <ul>
-              {course.parts.map(part=>
-              {
-                return(<li key ={part.id}>
-                {part.name} {part.exercises}
-                </li>)
-              }   
-              )}
-              <li style={{fontWeight: "bold"}}>Total of exercises {course.parts.reduce( ( sum, parts ) => sum + parts.exercises, 0)}</li>
-              </ul>
-              </li>)
+            return(<Course   id={course.id} name={course.name} parts={course.parts}/>)
           })}
           </ul>
       </div>
