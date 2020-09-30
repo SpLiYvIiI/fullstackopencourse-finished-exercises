@@ -7,15 +7,7 @@ import FindPerson from './components/FindPerson.js'
 const App = () => {
   let tmp = []
   axios.get('http://localhost:3001/persons').then(response=>{ tmp = response.data})
-  useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
-  }, [])
+  useEffect(() => {axios.get('http://localhost:3001/persons').then(response => {setPersons(response.data)})}, [])
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
@@ -27,7 +19,6 @@ const App = () => {
       name : newName,
       number : newNumber
     }
-    console.log(newName)
     if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
     axios.post('http://localhost:3001/persons',Numberobj).then(response => {console.log(response)})
     setPersons(persons.concat(Numberobj))
