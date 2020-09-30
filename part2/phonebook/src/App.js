@@ -4,7 +4,7 @@ import NewPerson from './components/NewPerson.js'
 import FindPerson from './components/FindPerson.js'
 
 const App = (props) => {
-  const tmp = props.numbers;
+  let tmp = props.numbers;
   const [ persons, setPersons ] = useState(props.numbers) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
@@ -15,8 +15,10 @@ const App = (props) => {
       name : newName,
       number : newNumber
     }
-    if(persons.find(person=>person.name === newName) === undefined){
+    console.log(newName)
+    if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
     setPersons(persons.concat(Numberobj))
+    tmp.push(Numberobj)
     }
     else {
       alert(newName + 'is already in phonebook')
@@ -25,14 +27,14 @@ const App = (props) => {
     setNumber('')
   }
   const Filter = (value) =>{
-    console.log(value)
     if(value === ''){
       setPersons(tmp);
     }
     else {
-      setPersons(tmp.filter(person => person.name.toLowerCase().indexOf(Person) !== -1))
+      setPersons(tmp.filter(person => person.name.toLowerCase().indexOf(Person.toLowerCase()) !== -1))
     }
   }
+  
   return (
     <div>
       <h2>Phonebook</h2>
