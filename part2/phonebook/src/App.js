@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
+import axios from 'axios'
 import Persons from './components/Persons.js'
 import NewPerson from './components/NewPerson.js'
 import FindPerson from './components/FindPerson.js'
 
-const App = (props) => {
-  let tmp = props.numbers;
-  const [ persons, setPersons ] = useState(props.numbers) 
+const App = () => {
+  let tmp = []
+  axios.get('http://localhost:3001/persons').then(response=>{ tmp = response.data})
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+  const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
   const [Person , setPerson] = useState('')
+
   const AddNumber = (event) =>{
     event.preventDefault();
     const Numberobj = {
@@ -17,11 +29,12 @@ const App = (props) => {
     }
     console.log(newName)
     if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
+    axios.post('http://localhost:3001/persons',Numberobj).then(response => {console.log(response)})
     setPersons(persons.concat(Numberobj))
     tmp.push(Numberobj)
     }
     else {
-      alert(newName + 'is already in phonebook')
+      alert(newName + ' is already in phonebook')
     }
     setNewName('')
     setNumber('')
