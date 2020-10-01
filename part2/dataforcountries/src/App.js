@@ -1,4 +1,31 @@
-import React from 'react'
+import React, {useEffect, useState } from 'react'
+import axios from 'axios'
+import Country from './components/Country'
+let tmp = []
+axios.get('https://restcountries.eu/rest/v2').then(response=>{tmp=response.data})
 
-
-export default () => <div>ylifona</div>
+export default () => {
+const [Countries,setCountries] = useState([])
+const [CountryName, setCountryName] = useState('')
+useEffect(()=>{axios.get('https://restcountries.eu/rest/v2').then(response=>{setCountries(response.data)})},[])
+const Filter = (value) =>{
+    console.log(value)
+    if(value === ''){
+        setCountries(tmp)
+    }
+    else{
+        setCountries(tmp.filter(Country => Country.name.toLowerCase().indexOf(value.toLowerCase()) !== -1))
+    }
+}
+return(
+    <div>
+    <h1>Insert country name</h1>
+    <input 
+    value={CountryName}
+    onChange={(event)=>{setCountryName(event.target.value); Filter(event.target.value)}}
+    >
+    </input>
+    <Country CountryName={CountryName} Countries={Countries}/>
+    </div>
+)
+}

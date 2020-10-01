@@ -3,10 +3,9 @@ import axios from 'axios'
 import Persons from './components/Persons.js'
 import NewPerson from './components/NewPerson.js'
 import FindPerson from './components/FindPerson.js'
-
+let tmp = []
+axios.get('http://localhost:3001/persons').then(response=>{ tmp = response.data})
 const App = () => {
-  let tmp = []
-  axios.get('http://localhost:3001/persons').then(response=>{ tmp = response.data})
   useEffect(() => {axios.get('http://localhost:3001/persons').then(response => {setPersons(response.data)})}, [])
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
@@ -31,11 +30,14 @@ const App = () => {
     setNumber('')
   }
   const Filter = (value) =>{
+    console.log(value)
+    console.log(persons)
     if(value === ''){
+      console.log('ylifona');
       setPersons(tmp);
     }
     else {
-      setPersons(tmp.filter(person => person.name.toLowerCase().indexOf(Person.toLowerCase()) !== -1))
+      setPersons(tmp.filter(person => person.name.toLowerCase().indexOf(value.toLowerCase()) !== -1))
     }
   }
   
