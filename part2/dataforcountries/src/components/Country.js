@@ -1,5 +1,6 @@
 import React from 'react'
 import CountryDetails from './Countrydetails'
+import Button from './Button'
 
 
 
@@ -25,7 +26,7 @@ export default ({CountryName,Countries,setCountries}) => {
                 return(
                 <li key={i}>
                 {Country.name} 
-                <button onClick={()=>{let tmp = [...Countries]; tmp[i].show = !tmp[i].show; setCountries(tmp)}}>{Country.show ? 'hide':'show'}</button>
+                <Button func={()=>{let tmp = [...Countries]; tmp[i].show = !tmp[i].show; setCountries(tmp)}} text={Country.show ? 'hide' : 'show'}/>
                 <CountryDetails show={Country.show} name={Country.name} flag={Country.flag} capital={Country.capital} languages={Country.languages} population={Country.population}/>
                 </li>) 
             })}
