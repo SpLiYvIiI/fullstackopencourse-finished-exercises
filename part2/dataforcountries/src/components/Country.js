@@ -15,7 +15,9 @@ export default ({CountryName,Countries,setCountries}) => {
     else{
         if(Countries.length === 1){
             return(
-            <CountryDetails show={true} name={Countries[0].name} flag={Countries[0].flag} capital={Countries[0].capital} languages={Countries[0].languages} population={Countries[0].population}/> 
+            <div>
+            <CountryDetails show={true} name={Countries[0].name} flag={Countries[0].flag} capital={Countries[0].capital} languages={Countries[0].languages} population={Countries[0].population}/>
+            </div>
             )
         }
         else{
