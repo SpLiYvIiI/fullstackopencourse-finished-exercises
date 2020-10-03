@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Weather from './Weather'
 import axios from 'axios'
+const weatherapi = 'http://api.weatherstack.com/current?access_key=41688ecfa0b76a65a0569c3212a65445&query='
 
 export default({show,name,flag,capital,languages,population})=>{
     const [wzr,setWeather] = useState({});
     const [x,setX] = useState(false) 
     useEffect(()=>{
-        axios.get('http://api.weatherstack.com/current?access_key=41688ecfa0b76a65a0569c3212a65445&query='+capital).then(response=>{
+        axios.get(weatherapi+capital).then(response=>{
             console.log(capital)
             setWeather(response.data);
             setX(true)

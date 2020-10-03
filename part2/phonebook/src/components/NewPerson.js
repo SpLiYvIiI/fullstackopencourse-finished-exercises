@@ -7,7 +7,7 @@ export default ({AddNumber,newName,setNewName,newNumber,setNumber}) =>{
     <div>
       name: <input
        value={newName} 
-       onChange={(event)=>{console.log(event.target.value); setNewName(event.target.value);}}
+       onChange={(event)=>{setNewName(event.target.value);}}
        />
     </div>
     <div>

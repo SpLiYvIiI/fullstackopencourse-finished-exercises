@@ -3,29 +3,39 @@ import axios from 'axios'
 import Persons from './components/Persons.js'
 import NewPerson from './components/NewPerson.js'
 import FindPerson from './components/FindPerson.js'
+import PersonService from './services/PersonService'
 const App = () => {
   const[Initial,setInitial] = useState([])
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
   const [Person , setPerson] = useState('')
-  useEffect(() => {axios.get('http://localhost:3001/persons').then(response => {
-    setInitial(response.data)
-    setPersons(response.data)
+  useEffect(() => {
+    PersonService.getAll().then(InitialData => {
+    setInitial(InitialData)
+    setPersons(InitialData)
   })}, [])
   const AddNumber = (event) =>{
     event.preventDefault();
-    const Numberobj = {
-      name : newName,
-      number : newNumber
-    }
     if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
-    axios.post('http://localhost:3001/persons',Numberobj).then(response => {console.log(response)})
-    setPersons(persons.concat(Numberobj))
-    setInitial(Initial.concat(Numberobj))
+      const Numberobj = {
+        name : newName,
+        number : newNumber
+      }
+      PersonService.addNumber(Numberobj).then(NewPer => {
+      setPersons(persons.concat(NewPer))
+      setInitial(Initial.concat(NewPer))
+    })
     }
     else {
-      alert(newName + ' is already in phonebook')
+      if(window.confirm(`${newName} is already in database do you want to update a number ?`)){
+        const perObj = persons.find(person=>person.name.toLowerCase() === newName.toLowerCase())
+        const newObj = {...perObj,number:newNumber}
+        PersonService.updateNumber(perObj.id,newObj).then(newOb =>{
+          setInitial(Initial.map(person => person.id !== perObj.id ? person : newOb))
+          setPersons(persons.map(person => person.id !== perObj.id ? person : newOb))
+        })
+      }
     }
     setNewName('')
     setNumber('')
@@ -38,7 +48,13 @@ const App = () => {
       setPersons(Initial.filter(person => person.name.toLowerCase().indexOf(value.toLowerCase()) !== -1))
     }
   }
-  
+  const deleteNumber = (id) =>{
+    if(window.confirm('You really want to delete this phone number ?! ')){
+    PersonService.deleteNumber(id).then(Res => console.log(Res))
+    setInitial(Initial.filter(per => per.id !== id))
+    setPersons(persons.filter(per=> per.id !== id))
+    }
+  }
   return (
     <div>
       <h2>Phonebook</h2>
@@ -46,7 +62,7 @@ const App = () => {
       <h1>Add number</h1>
       <NewPerson AddNumber={AddNumber} newName={newName} setNewName={setNewName} newNumber={newNumber} setNumber={setNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={persons} />
+      <Persons persons={persons} deleteNumber={deleteNumber}/>
     </div>
   )
 }
