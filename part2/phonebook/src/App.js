@@ -1,15 +1,16 @@
 import React, { useState , useEffect } from 'react'
-import axios from 'axios'
 import Persons from './components/Persons.js'
 import NewPerson from './components/NewPerson.js'
 import FindPerson from './components/FindPerson.js'
 import PersonService from './services/PersonService'
+import Notification from './components/Notification'
 const App = () => {
   const[Initial,setInitial] = useState([])
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNumber ] = useState('')
   const [Person , setPerson] = useState('')
+  const [Message, setMessage] = useState({message : null,type : null})
   useEffect(() => {
     PersonService.getAll().then(InitialData => {
     setInitial(InitialData)
@@ -25,6 +26,17 @@ const App = () => {
       PersonService.addNumber(Numberobj).then(NewPer => {
       setPersons(persons.concat(NewPer))
       setInitial(Initial.concat(NewPer))
+      setMessage({
+        message : 'Number was succesfully added',
+        type : 'succ'
+      }
+      )
+      setTimeout(() => {
+        setMessage({
+          message : null,
+          type : null
+        })
+      }, 5000)
     })
     }
     else {
@@ -32,9 +44,32 @@ const App = () => {
         const perObj = persons.find(person=>person.name.toLowerCase() === newName.toLowerCase())
         const newObj = {...perObj,number:newNumber}
         PersonService.updateNumber(perObj.id,newObj).then(newOb =>{
-          setInitial(Initial.map(person => person.id !== perObj.id ? person : newOb))
-          setPersons(persons.map(person => person.id !== perObj.id ? person : newOb))
+          setMessage({
+            message : 'Number was succesfully changed',
+            type : 'succ'
+          }
+          )
+          setTimeout(() => {
+            setMessage({
+              message : null,
+              type : null
+            })
+          }, 5000)
+        }).catch(error=>{
+          setMessage({
+            message : 'Number was already removed from server',
+            type : 'err'
+          }
+          )
+          setTimeout(() => {
+            setMessage({
+              message : null,
+              type : null
+            })
+          }, 5000)
         })
+        setInitial(Initial.filter(per => per.id !== perObj.id))
+        setPersons(persons.filter(per=> per.id !== perObj.id))
       }
     }
     setNewName('')
@@ -50,18 +85,31 @@ const App = () => {
   }
   const deleteNumber = (id) =>{
     if(window.confirm('You really want to delete this phone number ?! ')){
-    PersonService.deleteNumber(id).then(Res => console.log(Res))
+    PersonService.deleteNumber(id).then(Res =>{
+      setMessage({
+        message : 'Number was succesfully deleted',
+        type : 'succ'
+      }
+      )
+      setTimeout(() => {
+        setMessage({
+          message : null,
+          type : null
+        })
+      }, 5000)
+    })
     setInitial(Initial.filter(per => per.id !== id))
     setPersons(persons.filter(per=> per.id !== id))
     }
   }
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Notification message={Message.message} type={Message.type}/>
+      <h2 className='titles'>Phonebook</h2>
       <FindPerson Filter={Filter} setPerson={setPerson} Person={Person}/>
-      <h1>Add number</h1>
+      <h2 className='titles'>Add number</h2>
       <NewPerson AddNumber={AddNumber} newName={newName} setNewName={setNewName} newNumber={newNumber} setNumber={setNumber}/>
-      <h2>Numbers</h2>
+      <h2 className='titles'>Numbers</h2>
       <Persons persons={persons} deleteNumber={deleteNumber}/>
     </div>
   )
