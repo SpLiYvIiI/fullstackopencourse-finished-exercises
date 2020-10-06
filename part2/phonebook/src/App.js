@@ -68,8 +68,9 @@ const App = () => {
             })
           }, 5000)
         })
-        setInitial(Initial.filter(per => per.id !== perObj.id))
-        setPersons(persons.filter(per=> per.id !== perObj.id))
+        console.log(newObj)
+        setInitial(Initial.map(per => per.id === newObj.id ? newObj: per))
+        setPersons(persons.map(per => per.id === newObj.id ? newObj: per))
       }
     }
     setNewName('')
