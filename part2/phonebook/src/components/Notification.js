@@ -2,7 +2,7 @@ import React from 'react'
 
 export default ({ message,type }) => {
     if(message===null) return <></>
-    else if (type == 'succ'){
+    else if (type === 'succ'){
     return (
       <div className="success">
         {message}
