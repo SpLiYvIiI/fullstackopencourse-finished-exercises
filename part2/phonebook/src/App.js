@@ -16,6 +16,7 @@ const App = () => {
     setInitial(InitialData)
     setPersons(InitialData)
   })}, [])
+  console.log(persons)
   const AddNumber = (event) =>{
     event.preventDefault();
     if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
@@ -55,6 +56,8 @@ const App = () => {
               type : null
             })
           }, 5000)
+          setInitial(Initial.map(per => per.id === newObj.id ? newObj: per))
+          setPersons(persons.map(per => per.id === newObj.id ? newObj: per))
         }).catch(error=>{
           setMessage({
             message : 'Number was already removed from server',
@@ -67,10 +70,10 @@ const App = () => {
               type : null
             })
           }, 5000)
+          setInitial(Initial.filter(per => per.id !== newObj.id))
+          setPersons(persons.filter(per => per.id !== newObj.id))
         })
         console.log(newObj)
-        setInitial(Initial.map(per => per.id === newObj.id ? newObj: per))
-        setPersons(persons.map(per => per.id === newObj.id ? newObj: per))
       }
     }
     setNewName('')
@@ -85,6 +88,7 @@ const App = () => {
     }
   }
   const deleteNumber = (id) =>{
+    console.log(id)
     if(window.confirm('You really want to delete this phone number ?! ')){
     PersonService.deleteNumber(id).then(Res =>{
       setMessage({
