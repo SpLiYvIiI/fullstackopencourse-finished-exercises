@@ -16,7 +16,6 @@ const App = () => {
     setInitial(InitialData)
     setPersons(InitialData)
   })}, [])
-  console.log(persons)
   const AddNumber = (event) =>{
     event.preventDefault();
     if(persons.find(person=>person.name.toLowerCase() === newName.toLowerCase()) === undefined){
@@ -73,7 +72,6 @@ const App = () => {
           setInitial(Initial.filter(per => per.id !== newObj.id))
           setPersons(persons.filter(per => per.id !== newObj.id))
         })
-        console.log(newObj)
       }
     }
     setNewName('')
@@ -88,7 +86,6 @@ const App = () => {
     }
   }
   const deleteNumber = (id) =>{
-    console.log(id)
     if(window.confirm('You really want to delete this phone number ?! ')){
     PersonService.deleteNumber(id).then(Res =>{
       setMessage({

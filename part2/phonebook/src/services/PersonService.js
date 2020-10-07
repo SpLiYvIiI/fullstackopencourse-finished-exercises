@@ -5,7 +5,7 @@ const getAll = ()=>{
     return axios.get(BaseURL).then(response => response.data)
 }
 const deleteNumber = (id)=>{
-    return axios.delete(`${BaseURL}/${id}`).then(response => console.log(response.data))
+    return axios.delete(`${BaseURL}/${id}`).then(response => {})
 }
 
 const updateNumber = (id,newObj) => {
