@@ -24,11 +24,24 @@ const App = () => {
         number : newNumber
       }
       PersonService.addNumber(Numberobj).then(NewPer => {
+      console.log(NewPer)
       setPersons(persons.concat(NewPer))
       setInitial(Initial.concat(NewPer))
       setMessage({
         message : 'Number was succesfully added',
         type : 'succ'
+      }
+      )
+      setTimeout(() => {
+        setMessage({
+          message : null,
+          type : null
+        })
+      }, 5000)
+    }).catch(error=>{
+      setMessage({
+        message : error.response.data.message,
+        type : 'err'
       }
       )
       setTimeout(() => {
@@ -55,11 +68,11 @@ const App = () => {
               type : null
             })
           }, 5000)
-          setInitial(Initial.map(per => per.id === newObj.id ? newObj: per))
-          setPersons(persons.map(per => per.id === newObj.id ? newObj: per))
+          setInitial(Initial.map(per => per.id === newOb.id ? newOb: per))
+          setPersons(persons.map(per => per.id === newOb.id ? newOb: per))
         }).catch(error=>{
           setMessage({
-            message : 'Number was already removed from server',
+            message : error.response.data,
             type : 'err'
           }
           )
@@ -69,8 +82,10 @@ const App = () => {
               type : null
             })
           }, 5000)
+          if(error.response.status === 500){
           setInitial(Initial.filter(per => per.id !== newObj.id))
           setPersons(persons.filter(per => per.id !== newObj.id))
+          }
         })
       }
     }
