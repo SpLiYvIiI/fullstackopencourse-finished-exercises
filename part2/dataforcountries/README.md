@@ -1,3 +1,5 @@
 ##  Data for countries app (part2)
 
-excercise 2.12-2.14
+excercises done{
+    2.12-2.14
+} 

@@ -1,0 +1,30 @@
+
+.blogs {
+  color: black;
+    padding-top: 3px;
+    font-size: 25px;
+    font-weight: 300;
+    text-align: center;
+}
+  .titles {
+    color: green;
+    text-align: center;
+  }
+  .error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .success {
+    color: green;
+    background: white;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }

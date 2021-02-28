@@ -1,0 +1,40 @@
+{
+  "name": "phonebook-backend",
+  "version": "0.0.1",
+  "description": "phonebook backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "lint": "eslint .",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpLiYvIiI/phonebook-backend.git"
+  },
+  "author": "Xelladze",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SpLiYvIiI/phonebook-backend/issues"
+  },
+  "homepage": "https://github.com/SpLiYvIiI/phonebook-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.8",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.2",
+    "eslint": "^7.11.0",
+    "jest": "^26.5.3",
+    "nodemon": "^2.0.4",
+    "supertest": "^5.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
