@@ -1,5 +1,6 @@
 # fullstackopen-exercises
 
-racxa repozitoria amocanebi da igi
-
+exercises done {
+part0-part9
+}
  
